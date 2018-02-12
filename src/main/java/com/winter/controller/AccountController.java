@@ -41,7 +41,7 @@ public class AccountController {
     	if(rows == null) {
     		rows = 10;
     	}
-`    	DatagridResult<Account> result = accountService.findByUserId(userId, page, rows);
+    	DatagridResult<Account> result = accountService.findByUserId(userId, page, rows);
     	return result;
     }
     
