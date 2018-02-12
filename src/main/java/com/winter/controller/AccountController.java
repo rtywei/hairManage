@@ -1,4 +1,4 @@
-package com.winter.Controller;
+package com.winter.controller;
 
 import java.util.List;
 
