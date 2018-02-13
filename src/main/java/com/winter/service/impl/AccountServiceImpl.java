@@ -35,6 +35,17 @@ public class AccountServiceImpl implements AccountService{
 		result.setTotal(pageInfo.getTotal());
 		return result;
 	}
+	
+	@Override
+	public DatagridResult<Account> findByCondition(Account account) {
+		PageHelper.startPage(account.getPage(), account.getRows());
+		List<Account> list = accountMapper.findByCondition(account);
+		PageInfo<Account> pageInfo = new PageInfo<>(list);
+		DatagridResult<Account> result = new DatagridResult<Account>();
+		result.setRows(list);
+		result.setTotal(pageInfo.getTotal());
+		return result;
+	}
 
 	@Override
 	public DatagridResult<Account> findByUserId(Integer userId, Integer page, Integer rows) {
@@ -45,6 +56,16 @@ public class AccountServiceImpl implements AccountService{
 		result.setRows(list);
 		result.setTotal(pageInfo.getTotal());
 		return result;
+	}
+
+	@Override
+	public Double findUserAccount(Account account) {
+		return accountMapper.findUserAccount(account);
+	}
+
+	@Override
+	public int updateAccount(Account account) {
+		return accountMapper.updateAccount(account);
 	}
 
 }

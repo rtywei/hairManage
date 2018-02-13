@@ -38,6 +38,31 @@
 		order by date
 		desc
 	</select>
+	<select id="findByCondition" parameterType="com.winter.model.Account"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from account
+		<where>
+			<if test="userId != null">
+			 	userId = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="date != null">
+			 	date = #{date,jdbcType=VARCHAR},
+			</if>
+			<if test="flag != null">
+			 	flag = #{flag,jdbcType=INTEGER},
+			</if>
+		</where>
+		order by date
+		desc
+	</select>
+	
+	<select id="findUserMoney" parameterType="com.winter.model.Account" resultType="Double">
+		select count(money) from account 
+			where userId = #{userId, jdbcType = INTEGER} 
+			and flag = #{flag, jdbcType = INTEGER}
+	</select>
 
 	<select id="findByFlag" parameterType="String"
 		resultMap="BaseResultMap">
@@ -52,7 +77,7 @@
 		select username,sex,phone from customer where id = #{userId,jdbcType=INTEGER}
 	</select>
 
-	<update id="updateByPrimaryKey" parameterType="com.winter.model.Account">
+	<update id="updateAccount" parameterType="com.winter.model.Account">
 		update account
 		<set>
 			<if test="money != null">
@@ -76,7 +101,7 @@
 
 	<insert id="addAccount" parameterType="com.winter.model.Account">
 		insert into account (id, money, date, description, flag, userId)
-			values  (#{id,jdbcType=INTEGER}, #{money,jdbcType=DOUBLE}, #{date,jdbcType=DATE}, 
+			values  (#{id,jdbcType=INTEGER}, #{money,jdbcType=DOUBLE}, sysdate, 
       #{description,jdbcType=VARCHAR}), #{flag,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}
 	</insert>
 </mapper>

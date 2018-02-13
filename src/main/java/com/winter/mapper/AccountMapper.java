@@ -10,8 +10,12 @@ public interface AccountMapper {
 
 	public List<Account> findAllAccount();
 
-	public List<Account> selectAccountByUserId(String userId);
-
 	public List<Account> selectAccountByUserId(Integer userId);
+
+	public List<Account> findByCondition(Account account);
+
+	public Double findUserAccount(Account account);
+
+	public int updateAccount(Account account);
 
 }

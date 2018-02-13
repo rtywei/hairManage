@@ -26,6 +26,12 @@ public class AccountController {
     }
     
     @ResponseBody
+    @RequestMapping(value = "/update", produces = {"application/json;charset=UTF-8"})
+    public int updateAccount(Account account){
+        return accountService.updateAccount(account);
+    }
+    
+    @ResponseBody
     @RequestMapping(value = "/findAll" , produces = {"application/json;charset=UTF-8"})
     public DatagridResult<Account> findAllAcoount(Account account) {
     	DatagridResult<Account> result = accountService.findAllAccount(account);
@@ -45,4 +51,17 @@ public class AccountController {
     	return result;
     }
     
+    @ResponseBody
+    @RequestMapping(value = "/findByCondition" , produces = {"application/json;charset=UTF-8"})
+    public DatagridResult<Account> findByCondition(Account account) {
+    	DatagridResult<Account> result = accountService.findByCondition(account);
+    	return result;
+    }
+ 
+    @ResponseBody
+    @RequestMapping(value = "/findUserAccount" , produces = {"application/json;charset=UTF-8"})
+    public Double findUserAccount(Account account) {
+    	Double result = accountService.findUserAccount(account);
+    	return result;
+    }
 }
