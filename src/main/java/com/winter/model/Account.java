@@ -12,7 +12,11 @@ public class Account extends Page{
 	
 	private String description;
 	
-	private Integer flag; //0充值 1消费
+	/**
+	 * 交易类型
+	 * 0充值 1消费
+	 */
+	private Integer flag; 
 	
 	private Integer userId;
 	

@@ -43,22 +43,13 @@ public class UserController {
     }
     
     @RequestMapping(value = "/update", produces = {"application/json;charset=UTF-8"})
-    public String updateUser(User user,HttpServletResponse response) throws IOException{
-        int result = userService.update(user);
-        if(result > 0) {
-    		response.sendRedirect("/");
-    		return null;
-    	}else {
-    		return "system/error";
-    	}
+    public Integer updateUser(User user,HttpServletResponse response) throws IOException{
+    	return  userService.update(user);
     }
     
     @RequestMapping(value = "/findAll", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public DatagridResult<User> selectAll(User user,ModelAndView model){
-/*    	model.setViewName("/system/index");
-    	model.addObject("users", userService.selectAll(user));*/
-//    	DatagridResult<Object> datagridResult = new DatagridResult<>();
     	DatagridResult<User> result =  userService.selectAll(user);
     	return result;
     }
@@ -77,7 +68,7 @@ public class UserController {
         return users;
     }
     
-    @ResponseBody
+  /*  @ResponseBody
     @RequestMapping(value = "/findByUsername", produces = {"application/json;charset=UTF-8"})
     public ModelAndView findByUsername(User user,ModelAndView model){
     	model.addObject("users", userService.selectByUsername(user));
@@ -89,6 +80,12 @@ public class UserController {
     public ModelAndView selectByPhone(User user,ModelAndView model){
     	model.addObject("user", userService.selectByPhone(user));
         return model;
+    }*/
+    
+    @ResponseBody
+    @RequestMapping(value = "/findAllUsername", produces = {"application/json;charset=UTF-8"})
+    public List<User> findAllUsername() {
+    	return userService.findAllUsername();
     }
     
     

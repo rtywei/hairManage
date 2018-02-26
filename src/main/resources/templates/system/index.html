@@ -103,6 +103,9 @@
 			titil : "添加",
 			model : true,
 			shadow : true,
+			onClose : function () {
+				$("tt").datagrid('reload');
+			},
 			tools : [ {
 				iconCls : 'icon-add',
 				handler : function() {
@@ -110,6 +113,21 @@
 					if (v == false) {
 						return;
 					}
+					$('#userForm').form({    
+					    url: "/user/add",    
+					    onSubmit: function(){    
+					    },    
+					    success:function(data){    
+					        if(data == 0) {
+					        	alert("交易失败");
+					        }
+					        if(date == 1) {
+					        	alert("交易成功");
+					        	$('#user_add').window('close');
+					        }
+					    }    
+					});    
+					// submit the form    
 					$("#userForm").submit();
 				}
 			} ]
@@ -129,6 +147,21 @@
 					if (v == false) {
 						return;
 					}
+					
+					$('#updateForm').form({    
+					    url: "/user/update",    
+					    onSubmit: function(){    
+					    },    
+					    success:function(data){    
+					        if(data == 0) {
+					        	alert("交易失败");
+					        }
+					        if(date == 1) {
+					        	alert("交易成功");
+					        	$('#user_add').window('close');
+					        }
+					    }    
+					});  
 					$("#updateForm").submit();
 				}
 			} ]
@@ -273,7 +306,7 @@
 
 		<div id="user_add" class="easyui-window" title="添加客户" closed="true"
 			style="width: 500px; height: 300px; padding: 5px;">
-			<form id="userForm" action="/user/add" method="post">
+			<form id="userForm" method="post">
 				<div style="position: relative; left: 120px; top: 50px">
 					客户姓名<input type="text" name="username" class="easyui-validatebox"
 						placeholder="请输入姓名" required="true" /><br />

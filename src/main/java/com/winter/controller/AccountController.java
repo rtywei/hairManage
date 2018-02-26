@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mysql.jdbc.StringUtils;
 import com.winter.model.Account;
 import com.winter.model.DatagridResult;
 import com.winter.model.User;
@@ -22,13 +23,18 @@ public class AccountController {
     @ResponseBody
     @RequestMapping(value = "/add", produces = {"application/json;charset=UTF-8"})
     public int addAccount(Account account){
+    	User user = account.getUser();
+    	if(user == null || StringUtils.isNullOrEmpty(user.getPhone())) {
+    		return 0;
+    	}
         return accountService.addAccount(account);
     }
     
     @ResponseBody
     @RequestMapping(value = "/update", produces = {"application/json;charset=UTF-8"})
     public int updateAccount(Account account){
-        return accountService.updateAccount(account);
+        int i = accountService.updateAccount(account);
+        return i;
     }
     
     @ResponseBody

@@ -80,19 +80,19 @@
 	<update id="updateAccount" parameterType="com.winter.model.Account">
 		update account
 		<set>
-			<if test="money != null">
-				user_name = #{userName,jdbcType=VARCHAR},
+			<if test="money != null and money != ''">
+				money = #{money,jdbcType=VARCHAR},
 			</if>
-			<if test="date != null">
+			<if test="date != null and date != ''">
 				date = #{date,jdbcType=VARCHAR},
 			</if>
-			<if test="description != null">
+			<if test="description != null and description != ''">
 				description = #{description,jdbcType=VARCHAR},
 			</if>
-			<if test="flag != null">
+			<if test="flag != null and flag != ''">
 				flag = #{flag,jdbcType=VARCHAR},
 			</if>
-			<if test="userId != null">
+			<if test="userId != null and flag != ''">
 				userId = #{userId,jdbcType=INTEGER},
 			</if>
 		</set>
@@ -101,7 +101,7 @@
 
 	<insert id="addAccount" parameterType="com.winter.model.Account">
 		insert into account (id, money, date, description, flag, userId)
-			values  (#{id,jdbcType=INTEGER}, #{money,jdbcType=DOUBLE}, sysdate, 
-      #{description,jdbcType=VARCHAR}), #{flag,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}
+			values  (#{id,jdbcType=INTEGER}, #{money,jdbcType=DOUBLE}, now(), 
+      	#{description,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER} )
 	</insert>
 </mapper>

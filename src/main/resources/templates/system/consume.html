@@ -79,10 +79,27 @@
 				tools:[{
 					iconCls:'icon-add',
 					handler:function(){
+						$("#accountForm").form('clear');
 						var v = $("#accountForm").form("validate");
+						alert(v);
 						if(v == false) {
 							return;
 						}
+						$("#accountForm").form({
+							url: "/account/add",    
+						    onSubmit: function(){    
+						    },    
+						    success:function(data){    
+						        if(data == 0) {
+						        	alert("交易失败");
+						        }
+						        if(data == 1) {
+						        	alert("交易成功");
+						        	$('#account_add').window('close');
+						        	$("#tt").datagrid('reload');
+						        }
+						    }
+						});
 						$("#accountForm").submit();
 					}
 				}]
@@ -98,10 +115,26 @@
 				tools:[{
 					iconCls:'icon-save',
 					handler:function(){
+						$("#updateForm").form('clear');
 						var v = $("#updateForm").form("validate");
 						if(v == false) {
 							return;
 						}
+						$("#updateForm").form({
+							url: "/account/update",    
+						    onSubmit: function(){    
+						    },    
+						    success:function(data){    
+						        if(data == 0) {
+						        	alert("交易失败");
+						        }
+						        if(data == 1) {
+						        	alert("交易成功");
+						        	$('#account_update').window('close');
+						        	$("#tt").datagrid('reload');
+						        }
+						    }
+						});
 						$("#updateForm").submit();
 					}
 				}]
@@ -162,6 +195,19 @@
 		
 		function add() {
 			$("#account_add").window("open");
+			$('#account_add_phone').combobox({    
+			    url:'/user/findAllUsername',    
+			    valueField:'phone',    
+			    textField: 'username',
+			    filter	 : function (q, row) {
+			    	var opts = $(this).combobox('options');
+					return row[opts.textField].indexOf(q) == 0;
+			    },
+			    formatter: function(row){
+					var opts = $(this).combobox('options');
+					return row[opts.textField] + row[opts.valueField];
+				}
+			});
 		}
 		function update() {
 			$("#account_update").window("open");
@@ -201,8 +247,8 @@
 			<div>
 				<input id="ss" style="width:250px"></input>
 				<div id="mm" style="width:100px">
-				    <div data-options="name:'phone',iconCls:'icon-ok'" style="width:100px">手机号查询</div>
-				    <div data-options="name:'username'" style="width:100px">姓名查询</div>
+				    <div data-options="name:'flag',iconCls:'icon-ok'" style="width:100px">消费类型查询</div>
+				    <div data-options="name:'date'" style="width:100px">日期查询</div>
 				</div>
 				<div style="height:548px">
 					<table id="tt" ></table>
@@ -210,23 +256,25 @@
 			</div>
 		</div>
 		
-		<div id="account_add" class="easyui-window" title="添加账户" closed="true" style="width:500px;height:300px;padding:5px;">
-			<form id="accountForm" action="/account/add" method="post">
+		<div id="account_add" class="easyui-window" title="添加账户信息" closed="true" style="width:500px;height:300px;padding:5px;">
+			<form id="accountForm" method="post">
 				<div style="position:relative;left:120px;top:50px">
-					客户姓名<input type="text" name="username" class="easyui-validatebox" placeholder="请输入姓名" required="true"/><br/><br/>
-					性别<input type="radio" name="sex" value="0"/>男 <input type="radio" name="sex" value="1"/>女<br/><br/>
-					手机号<input type="text" name="phone" class="easyui-validatebox" validType="phone" placeholder="请输入手机号" required="true"/>
+					<input id="account_add_phone" name="user.phone" value="请选择" /> <br/><br/>
+					交易类型<input type="radio" name="flag" id="account_add_flag" value="0"/>充值 <input type="radio" name="flag" value="1" />消费<br/><br/>
+					金额<input type="text" id="account_add_money" name="money" placeholder="请输入金额"/><br/><br/>
+					描述信息<input type="text" name="description" placeholder="请添加消费描述" />
 				</div>
 			</form>
 		</div>
 		
-		<div id="account_update" class="easyui-window" title="修改账户" closed="true" style="width:500px;height:300px;padding:5px;">
+		<div id="account_update" class="easyui-window" title="修改账户信息" closed="true" style="width:500px;height:300px;padding:5px;">
 			<form id="updateForm" action="/account/update" method="post">
 			<div style="position:relative;left:120px;top:50px">
-				<input type='hidden' name='id'/>
-					客户姓名<input type="text" name="username" placeholder="请输入姓名"/><br/><br/>
-					性别<input type="radio" name="sex" value="0"/>男 <input type="radio" name="sex" value="1"/>女<br/><br/>
-					手机号<input type="text" name="phone" placeholder="请输入手机号"/>
+					<input type='hidden' name='id'/>
+					交易类型<input type="radio"   name="flag" value="0" required = "true"/>充值 <input  type="radio" name="flag" value="1" required = "true"/>消费<br/><br/>
+					金额<input type="text" name="money"  placeholder="请输入金额" required="true"/><br/><br/>
+					描述信息<input type="text" name="description" placeholder="请添加消费描述" required="true"/><br/><br/>
+					日期<input type="date" name="date" disabled="false"/>
 				</div>
 			</form>
 		</div>

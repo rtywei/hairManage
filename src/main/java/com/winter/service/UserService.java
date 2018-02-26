@@ -23,6 +23,8 @@ public interface UserService {
 	public DatagridResult<User> selectAll(User user);
 
 	public Object selectById(User user);
+
+	public List<User> findAllUsername();
 	
 
 }

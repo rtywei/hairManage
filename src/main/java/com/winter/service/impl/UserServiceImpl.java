@@ -19,7 +19,7 @@ import com.winter.service.UserService;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserMapper userMapper;//这里会报错，但是并不会影响
+    private UserMapper userMapper;
 
     @Override
     public int addUser(User user) {
@@ -72,6 +72,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Object selectById(User user) {
 		return userMapper.selectByPrimaryKey(user.getId());
+	}
+
+	@Override
+	public List<User> findAllUsername() {
+		return userMapper.findAllUsername();
 	}
     
     
