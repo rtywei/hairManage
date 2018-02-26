@@ -58,8 +58,8 @@
 		desc
 	</select>
 	
-	<select id="findUserMoney" parameterType="com.winter.model.Account" resultType="Double">
-		select count(money) from account 
+	<select id="findUserAccount" parameterType="com.winter.model.Account" resultType="Double">
+		select sum(money) from account 
 			where userId = #{userId, jdbcType = INTEGER} 
 			and flag = #{flag, jdbcType = INTEGER}
 	</select>

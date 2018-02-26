@@ -20,12 +20,14 @@
 			text : '修改',
 			iconCls : 'icon-save',
 			handler : update
-		},{
+		}
+		/* ,{
 			id : 'button-view',
 			text : '查询',
 			iconCls : 'icon-search',
 			handler : search
-		}]
+		} */
+		]
 		var columns = [[{
 			field : 'id',
 			checkbox : true
@@ -79,15 +81,15 @@
 				tools:[{
 					iconCls:'icon-add',
 					handler:function(){
-						$("#accountForm").form('clear');
+						
 						var v = $("#accountForm").form("validate");
-						alert(v);
 						if(v == false) {
 							return;
 						}
 						$("#accountForm").form({
 							url: "/account/add",    
-						    onSubmit: function(){    
+						    onSubmit: function(){
+						    	
 						    },    
 						    success:function(data){    
 						        if(data == 0) {
@@ -97,6 +99,12 @@
 						        	alert("交易成功");
 						        	$('#account_add').window('close');
 						        	$("#tt").datagrid('reload');
+						        	$("#accountForm").form('clear');
+						        }
+						        if(data == -1) {
+						        	alert("余额不足，请充值");
+						        	$('#account_add').window('close');
+						        	$("#accountForm").form('clear');
 						        }
 						    }
 						});
@@ -115,7 +123,6 @@
 				tools:[{
 					iconCls:'icon-save',
 					handler:function(){
-						$("#updateForm").form('clear');
 						var v = $("#updateForm").form("validate");
 						if(v == false) {
 							return;
@@ -126,13 +133,14 @@
 						    },    
 						    success:function(data){    
 						        if(data == 0) {
-						        	alert("交易失败");
+						        	alert("修改失败");
 						        }
 						        if(data == 1) {
-						        	alert("交易成功");
+						        	alert("修改成功");
 						        	$('#account_update').window('close');
 						        	$("#tt").datagrid('reload');
 						        }
+								$("#updateForm").form('clear');
 						    }
 						});
 						$("#updateForm").submit();
@@ -148,6 +156,8 @@
 				striped : true,
 				pagination : true,
 				toolbar : toolbar,
+				pageSize : 15,
+				pageList : [15,20,25],
 				columns : columns,
 				pagination : true,
 				url : "/account/findAll",
@@ -158,7 +168,7 @@
 				}
 			})
 			
-			$('#ss').searchbox({
+/* 			$('#ss').searchbox({
 			    searcher:function(value,name){
 			    	$('#tt').datagrid({
 						iconCls : 'icon-forward',
@@ -179,7 +189,7 @@
 			    },
 			    menu:'#mm',
 			    prompt:'请输入查询信息'
-			});
+			}); */
 			$.extend($.fn.validatebox.defaults.rules, {
 				phone: {
 					validator: function(value,param) {
@@ -190,7 +200,6 @@
 				}
 			});
 			
-			$("")
 		});
 		
 		function add() {
@@ -208,10 +217,12 @@
 					return row[opts.textField] + row[opts.valueField];
 				}
 			});
+			
 		}
 		function update() {
 			$("#account_update").window("open");
 			var row = $("#tt").datagrid('getSelected');
+			$("#showName h3").html(row.user.username);
 			$("#updateForm").form("load",row);
 		}
 		function search() {
@@ -245,11 +256,11 @@
 		
 		<div data-options="region:'center',title:'消费信息',iconCls:'icon-ok'">
 			<div>
-				<input id="ss" style="width:250px"></input>
+<!-- 				<input id="ss" style="width:250px"></input>
 				<div id="mm" style="width:100px">
 				    <div data-options="name:'flag',iconCls:'icon-ok'" style="width:100px">消费类型查询</div>
 				    <div data-options="name:'date'" style="width:100px">日期查询</div>
-				</div>
+				</div> -->
 				<div style="height:548px">
 					<table id="tt" ></table>
 				</div>
@@ -269,8 +280,9 @@
 		
 		<div id="account_update" class="easyui-window" title="修改账户信息" closed="true" style="width:500px;height:300px;padding:5px;">
 			<form id="updateForm" action="/account/update" method="post">
-			<div style="position:relative;left:120px;top:50px">
+			<div style="position:relative;left:120px;top:20px">
 					<input type='hidden' name='id'/>
+					<div id = "showName"><h3></h3></div>
 					交易类型<input type="radio"   name="flag" value="0" required = "true"/>充值 <input  type="radio" name="flag" value="1" required = "true"/>消费<br/><br/>
 					金额<input type="text" name="money"  placeholder="请输入金额" required="true"/><br/><br/>
 					描述信息<input type="text" name="description" placeholder="请添加消费描述" required="true"/><br/><br/>

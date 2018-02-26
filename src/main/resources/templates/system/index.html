@@ -176,7 +176,10 @@
 			pagination : true,
 			toolbar : toolbar,
 			columns : columns,
+			pageSize : 15,
+			pageList : [15,20,25],
 			striped : true,
+			singleSelect : true,
 			url : "/user/findAll",
 			fitColumns : "true",
 			onDblClickRow : function(rowIndex, rowData) {
@@ -237,32 +240,35 @@
 		if ($('#tabs').tabs('exists', "账户列表")) {
 			var subTab = $('#tabs').tabs('select', "账户列表");
 			var selTab = $('#tabs').tabs('getSelected'); 
-			
-			$("#accountTable").datagrid('reload');
 		} else {
-			var content = '<div style="height:525px"><table id="accountTable"></table></div>';
+			var content = '<div style="height:480px"><table id="accountTable"></table></div><h2>剩余金额:<div id="accountMoney" style="height:20px"></div></h2>';
 			$("#tabs").tabs('add', {
 				title : "账户列表",
 				content : content,
 				closable : true
 			});
-			$("#accountTable").datagrid({
-				pagination : true,
-				iconCls : 'icon-forward',
-				fit : true,
-				rownumber : true,
-				striped : true,
-				pagination : true,
-				toolbar : toolbar,
-				columns : accounts,
-				striped : true,
-				url : url,
-				fitColumns : "true"
-			});
 		}
-		function createFrame(url) {
-			return '<iframe scrolling="auto" frameborder="0" src="'+url+'"></iframe>';
-		}
+		$("#accountTable").datagrid({
+			pagination : true,
+			iconCls : 'icon-forward',
+			fit : true,
+			rownumber : true,
+			striped : true,
+			pagination : true,
+			columns : accounts,
+			striped : true,
+			url : url,
+			fitColumns : "true",
+			onLoadSuccess : function() {
+				$.post("/account/findUserAccount?userId=" + row.id ,function (data) {
+					if(data != "") {
+						$("#accountMoney").html(data);
+					} else if(data == 0) {
+						$("#accountMoney").html("0.00");
+					}
+				});
+			}
+		});
 	}
 </script>
 </head>

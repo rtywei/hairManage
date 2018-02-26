@@ -30,6 +30,13 @@ public class AccountServiceImpl implements AccountService{
 		user.setPhone(phone);
 		user = userMapper.findByCondition(user);
 		account.setUserId(user.getId());
+		// 如果是消费，查询余额
+		if(account.getFlag() == 1) {
+			double result = getAccountResult(account);
+			if(result - account.getMoney() < 0) {
+				return -1;
+			}
+		} 
 		return accountMapper.addAccount(account);
 	}
 
@@ -67,8 +74,28 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	public Double findUserAccount(Account account) {
-		return accountMapper.findUserAccount(account);
+	public double findUserAccount(Account account) {
+		double result = getAccountResult(account);
+		return result;
+	}
+
+	private double getAccountResult(Account account) {
+		double zheng = 0;
+		try {
+			account.setFlag(0);
+			zheng = accountMapper.findUserAccount(account);
+		} catch (NullPointerException e) {
+			zheng = 0;
+		}
+		double fu = 0;
+		try {
+			account.setFlag(1);
+			fu = accountMapper.findUserAccount(account);
+		} catch (NullPointerException e) {
+			fu = 0;
+		}
+		double result = zheng - fu;
+		return result;
 	}
 
 	@Override

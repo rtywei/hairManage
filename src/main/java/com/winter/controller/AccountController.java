@@ -1,6 +1,6 @@
 package com.winter.controller;
 
-import java.util.List;
+import java.text.DecimalFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,7 +39,7 @@ public class AccountController {
     
     @ResponseBody
     @RequestMapping(value = "/findAll" , produces = {"application/json;charset=UTF-8"})
-    public DatagridResult<Account> findAllAcoount(Account account) {
+    public DatagridResult<Account> findAllAccount(Account account) {
     	DatagridResult<Account> result = accountService.findAllAccount(account);
     	return result;
     }
@@ -66,8 +66,10 @@ public class AccountController {
  
     @ResponseBody
     @RequestMapping(value = "/findUserAccount" , produces = {"application/json;charset=UTF-8"})
-    public Double findUserAccount(Account account) {
-    	Double result = accountService.findUserAccount(account);
-    	return result;
+    public String findUserAccount(Account account) {
+    	double result = accountService.findUserAccount(account);
+        DecimalFormat df=new DecimalFormat("0.00");
+        return df.format(result);
     }
+    
 }

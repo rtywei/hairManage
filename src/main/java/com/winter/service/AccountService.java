@@ -45,7 +45,7 @@ public interface AccountService {
 	 * @param account
 	 * @return
 	 */
-	public Double findUserAccount(Account account);
+	public double findUserAccount(Account account);
 
 	/**
 	 * 根据客户修改账户信息
