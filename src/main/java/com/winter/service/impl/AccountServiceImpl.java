@@ -28,7 +28,7 @@ public class AccountServiceImpl implements AccountService{
 		String phone = account.getUser().getPhone();
 		User user = new User();
 		user.setPhone(phone);
-		user = userMapper.findByCondition(user);
+		user = userMapper.findByPhone(user);
 		account.setUserId(user.getId());
 		// 如果是消费，查询余额
 		if(account.getFlag() == 1) {

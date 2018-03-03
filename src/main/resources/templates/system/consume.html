@@ -159,6 +159,7 @@
 				pageSize : 15,
 				pageList : [15,20,25],
 				columns : columns,
+				singleSelect : true,
 				pagination : true,
 				url : "/account/findAll",
 				fitColumns:"true",
@@ -215,7 +216,7 @@
 			    formatter: function(row){
 					var opts = $(this).combobox('options');
 					return row[opts.textField] + row[opts.valueField];
-				}
+				}	
 			});
 			
 		}
@@ -261,7 +262,7 @@
 				    <div data-options="name:'flag',iconCls:'icon-ok'" style="width:100px">消费类型查询</div>
 				    <div data-options="name:'date'" style="width:100px">日期查询</div>
 				</div> -->
-				<div style="height:548px">
+				<div style="height:570px">
 					<table id="tt" ></table>
 				</div>
 			</div>
@@ -286,7 +287,7 @@
 					交易类型<input type="radio"   name="flag" value="0" required = "true"/>充值 <input  type="radio" name="flag" value="1" required = "true"/>消费<br/><br/>
 					金额<input type="text" name="money"  placeholder="请输入金额" required="true"/><br/><br/>
 					描述信息<input type="text" name="description" placeholder="请添加消费描述" required="true"/><br/><br/>
-					日期<input type="date" name="date" disabled="false"/>
+					日期<input type="datetime" name="date" disabled="false"/>
 				</div>
 			</form>
 		</div>

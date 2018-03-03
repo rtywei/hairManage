@@ -32,7 +32,7 @@
 		where username = #{username,jdbcType=INTEGER}
 	</select>
 
-	<select id="selectByPhone" resultMap="BaseResultMap"
+	<select id="findByPhone" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
 		select
 		<include refid="Base_Column_List" />

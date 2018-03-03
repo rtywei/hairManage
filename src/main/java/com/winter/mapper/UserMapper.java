@@ -63,5 +63,7 @@ public interface UserMapper {
 	public List<User> findAllUsername();
 
 	public User findByCondition(User user);
+
+	public User findByPhone(User user);
     
 }

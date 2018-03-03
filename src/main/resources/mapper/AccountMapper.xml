@@ -63,7 +63,7 @@
 			where userId = #{userId, jdbcType = INTEGER} 
 			and flag = #{flag, jdbcType = INTEGER}
 	</select>
-
+	
 	<select id="findByFlag" parameterType="String"
 		resultMap="BaseResultMap">
 		select
@@ -80,11 +80,9 @@
 	<update id="updateAccount" parameterType="com.winter.model.Account">
 		update account
 		<set>
+			date = sysdate(),
 			<if test="money != null and money != ''">
 				money = #{money,jdbcType=VARCHAR},
-			</if>
-			<if test="date != null and date != ''">
-				date = #{date,jdbcType=VARCHAR},
 			</if>
 			<if test="description != null and description != ''">
 				description = #{description,jdbcType=VARCHAR},
@@ -101,7 +99,7 @@
 
 	<insert id="addAccount" parameterType="com.winter.model.Account">
 		insert into account (id, money, date, description, flag, userId)
-			values  (#{id,jdbcType=INTEGER}, #{money,jdbcType=DOUBLE}, now(), 
+			values  (#{id,jdbcType=INTEGER}, #{money,jdbcType=DOUBLE}, sysdate(), 
       	#{description,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER} )
 	</insert>
 </mapper>
