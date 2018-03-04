@@ -16,7 +16,7 @@ public interface UserService {
 
 	public int update(User user);
 	
-	public DatagridResult<User> selectByPhone(User phone);
+	public DatagridResult<User> selectUsersByPhone(User phone);
 	
 	public DatagridResult<User> selectByUsername(User username);
 
@@ -25,6 +25,8 @@ public interface UserService {
 	public Object selectById(User user);
 
 	public List<User> findAllUsername();
+
+	public User findByPhone(String phone);
 	
 
 }

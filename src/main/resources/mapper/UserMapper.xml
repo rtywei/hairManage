@@ -29,7 +29,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from customer
-		where username = #{username,jdbcType=INTEGER}
+		where username like  concat(#{username,jdbcType=INTEGER},'%')
 	</select>
 
 	<select id="findByPhone" resultMap="BaseResultMap"
@@ -38,6 +38,14 @@
 		<include refid="Base_Column_List" />
 		from customer
 		where phone = #{phone,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="selectUsersByPhone" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from customer
+		where phone like concat(#{phone,jdbcType=VARCHAR},'%')
 	</select>
 
 	<select id="findAllUsername" resultMap="BaseResultMap">

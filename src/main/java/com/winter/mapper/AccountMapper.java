@@ -13,9 +13,17 @@ public interface AccountMapper {
 	 * @return
 	 */
 	public int addAccount(Account account);
+	
+	/**
+	 * 修改账户
+	 * 
+	 * @param account
+	 * @return
+	 */
+	public int updateAccount(Account account);
 
 	/**
-	 * 查询所有账户几乎
+	 * 查询所有账户
 	 * 
 	 * @return
 	 */
@@ -43,14 +51,10 @@ public interface AccountMapper {
 	 * @param account
 	 * @return
 	 */
-	public Double findUserAccount(Account account);
+	public Double findUserMoney(Account account);
 
-	/**
-	 * 修改账户
-	 * 
-	 * @param account
-	 * @return
-	 */
-	public int updateAccount(Account account);
+	public Account findAccountById(Integer id);
+
+	public Integer findUserIdById(Integer id);
 
 }

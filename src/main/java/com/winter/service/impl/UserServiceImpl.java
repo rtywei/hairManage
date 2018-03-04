@@ -59,9 +59,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public DatagridResult<User> selectByPhone(User user) {
+	public DatagridResult<User> selectUsersByPhone(User user) {
 		PageHelper.startPage(user.getPage(),user.getRows());
-		List<User> list = userMapper.selectByPhone(user.getPhone());
+		List<User> list = userMapper.selectUsersByPhone(user.getPhone());
 		PageInfo<User> pageInfo = new PageInfo<>(list);
 		DatagridResult<User> result = new DatagridResult<User>();
 		result.setRows(list);
@@ -78,8 +78,12 @@ public class UserServiceImpl implements UserService {
 	public List<User> findAllUsername() {
 		return userMapper.findAllUsername();
 	}
-    
-    
+	
+	@Override
+	public User findByPhone(String phone) {
+		return userMapper.findByPhone(phone);
+		
+	}
     
 /*
     

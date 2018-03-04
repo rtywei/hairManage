@@ -9,26 +9,28 @@
 		<result column="flag" property="flag" jdbcType="INTEGER" />
 		<association property="user" column="userId" select="getUser"/>
 	</resultMap>
+	<select id="getUser" parameterType = "Integer" resultType = "com.winter.model.User">
+		select username,sex,phone from customer where id = #{userId,jdbcType=INTEGER}
+	</select>
 	<sql id="Base_Column_List">
 		id, money, date, description,flag,userId
 	</sql>
 
+	<!-- 查询账单 -->
 	<select id="findAllAccount" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from account
 		order by date desc
 	</select>
-
-	<select id="selectAccountById" parameterType="Integer"
+	<select id="findAccountById" parameterType="Integer"
 		resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from account
 		where id = #{id,jdbcType=INTEGER}
-		order by date desc
 	</select>
-
+	<!-- 根据用户编号查询账单 -->
 	<select id="selectAccountByUserId" parameterType="Integer"
 		resultMap="BaseResultMap">
 		select
@@ -38,6 +40,7 @@
 		order by date
 		desc
 	</select>
+	<!-- 根据条件查询账单 -->
 	<select id="findByCondition" parameterType="com.winter.model.Account"
 		resultMap="BaseResultMap">
 		select
@@ -57,38 +60,26 @@
 		order by date
 		desc
 	</select>
-	
-	<select id="findUserAccount" parameterType="com.winter.model.Account" resultType="Double">
+	<!-- 查询用户某种订单金额 -->
+	<select id="findUserMoney" parameterType="com.winter.model.Account" resultType="Double">
 		select sum(money) from account 
 			where userId = #{userId, jdbcType = INTEGER} 
 			and flag = #{flag, jdbcType = INTEGER}
 	</select>
-	
-	<select id="findByFlag" parameterType="String"
-		resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List" />
-		from account
-		where flag = #{flag,jdbcType=VARCHAR}
-		order by date desc
+	<select id="findUserIdById" parameterType="Integer" resultType="Integer">
+		select userId from account where id = #{id, jdbcType = INTEGER}
 	</select>
-	
-	<select id="getUser" parameterType = "Integer" resultType = "com.winter.model.User">
-		select username,sex,phone from customer where id = #{userId,jdbcType=INTEGER}
-	</select>
-
+	<!-- 修改用户 -->
 	<update id="updateAccount" parameterType="com.winter.model.Account">
 		update account
 		<set>
 			date = sysdate(),
+			flag = ${flag},
 			<if test="money != null and money != ''">
 				money = #{money,jdbcType=VARCHAR},
 			</if>
 			<if test="description != null and description != ''">
 				description = #{description,jdbcType=VARCHAR},
-			</if>
-			<if test="flag != null and flag != ''">
-				flag = #{flag,jdbcType=VARCHAR},
 			</if>
 			<if test="userId != null and flag != ''">
 				userId = #{userId,jdbcType=INTEGER},

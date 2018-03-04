@@ -58,12 +58,12 @@ public interface UserMapper {
      * @param username
      * @return
      */
-    public List<User> selectByPhone(String username);
+    public List<User> selectUsersByPhone(String phone);
 
 	public List<User> findAllUsername();
 
 	public User findByCondition(User user);
 
-	public User findByPhone(User user);
+	public User findByPhone(String phone);
     
 }

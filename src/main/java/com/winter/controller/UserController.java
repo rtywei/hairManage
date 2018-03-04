@@ -26,27 +26,40 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 添加用户
+     * 
+     * @param user
+     * @param response
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(value = "/add", produces = {"application/json;charset=UTF-8"})
-    public String addUser(User user,HttpServletResponse response) throws IOException{
-    	int result = userService.addUser(user);
-    	if(result > 0) {
-    		response.sendRedirect("/");
-    		return null;
-    	}else {
-    		return "system/error";
-    	}
+    @ResponseBody
+    public Integer addUser(User user,HttpServletResponse response) {
+    	return userService.addUser(user);
     }
     
-    @RequestMapping(value = "/delete", produces = {"application/json;charset=UTF-8"})
-    public int deleteUser(User user){
-        return userService.deleteUser(user);
-    }
-    
+    /**
+     * 修改用户
+     * 
+     * @param user
+     * @param response
+     * @return
+     */
     @RequestMapping(value = "/update", produces = {"application/json;charset=UTF-8"})
-    public Integer updateUser(User user,HttpServletResponse response) throws IOException{
+    @ResponseBody
+    public Integer updateUser(User user,HttpServletResponse response){
     	return  userService.update(user);
     }
     
+    /**
+     * 默认界面查询所有数据
+     * 
+     * @param user
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/findAll", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public DatagridResult<User> selectAll(User user,ModelAndView model){
@@ -54,6 +67,13 @@ public class UserController {
     	return result;
     }
     
+    /**
+     * sercheBox 条件查询
+     * 
+     * @param user
+     * @param model
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/findByCondition", produces = {"application/json;charset=UTF-8"})
     public DatagridResult<User> findById(User user,ModelAndView model){
@@ -61,13 +81,29 @@ public class UserController {
     	if(!StringUtils.isEmpty(user.getUsername())) {
     		users = userService.selectByUsername(user);
     	}else if (!StringUtils.isEmpty(user.getPhone())) {
-    		users = userService.selectByPhone(user);
+    		users = userService.selectUsersByPhone(user);
     	}else {
     		users = userService.selectAll(user);
     	}
         return users;
     }
     
+    /**
+     * checkBox数据加载所有用户
+     * 
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findAllUsername", produces = {"application/json;charset=UTF-8"})
+    public List<User> findAllUsername() {
+    	return userService.findAllUsername();
+    }
+
+    /*    @RequestMapping(value = "/delete", produces = {"application/json;charset=UTF-8"})
+    public int deleteUser(User user){
+        return userService.deleteUser(user);
+    }
+    */
   /*  @ResponseBody
     @RequestMapping(value = "/findByUsername", produces = {"application/json;charset=UTF-8"})
     public ModelAndView findByUsername(User user,ModelAndView model){
@@ -81,12 +117,5 @@ public class UserController {
     	model.addObject("user", userService.selectByPhone(user));
         return model;
     }*/
-    
-    @ResponseBody
-    @RequestMapping(value = "/findAllUsername", produces = {"application/json;charset=UTF-8"})
-    public List<User> findAllUsername() {
-    	return userService.findAllUsername();
-    }
-    
     
 }

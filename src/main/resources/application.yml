@@ -83,3 +83,7 @@ pagehelper:
 management:
     security: 
       enabled: false
+
+logging:
+  level: 
+    com: DEBUG
