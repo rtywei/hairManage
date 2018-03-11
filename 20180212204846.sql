@@ -23,13 +23,4 @@ CREATE TABLE `customer` (
   `phone` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-BEGIN;
-LOCK TABLES `mysql`.`account` WRITE;
-DELETE FROM `mysql`.`account`;
-UNLOCK TABLES;
-COMMIT;
-BEGIN;
-LOCK TABLES `mysql`.`customer` WRITE;
-DELETE FROM `mysql`.`customer`;
-UNLOCK TABLES;
-COMMIT;
+
