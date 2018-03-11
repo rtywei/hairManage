@@ -99,11 +99,17 @@ public class UserController {
     	return userService.findAllUsername();
     }
 
-    /*    @RequestMapping(value = "/delete", produces = {"application/json;charset=UTF-8"})
-    public int deleteUser(User user){
-        return userService.deleteUser(user);
+    @RequestMapping(value = "/delete", produces = {"application/json;charset=UTF-8"})
+    public String deleteUser(User user, HttpServletResponse response) throws IOException{
+        int i = userService.deleteUser(user);
+    	if(i == 1) {
+			response.sendRedirect("/consume");
+    	}else {
+    		response.sendRedirect("/index");
+    	}
+    	return null;
     }
-    */
+    
   /*  @ResponseBody
     @RequestMapping(value = "/findByUsername", produces = {"application/json;charset=UTF-8"})
     public ModelAndView findByUsername(User user,ModelAndView model){

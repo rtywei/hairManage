@@ -57,4 +57,6 @@ public interface AccountMapper {
 
 	public Integer findUserIdById(Integer id);
 
+	public Integer delete(Integer id);
+
 }

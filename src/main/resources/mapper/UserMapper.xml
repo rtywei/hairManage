@@ -82,7 +82,7 @@
 		#{sex,jdbcType=VARCHAR},
 		#{phone,jdbcType=VARCHAR})
 	</insert>
-
+	
 	<update id="updateByPrimaryKey" parameterType="com.winter.model.User">
 		update customer
 		<set>

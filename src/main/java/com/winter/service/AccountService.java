@@ -55,4 +55,6 @@ public interface AccountService {
 	 */
 	public int updateAccount(Account account);
 
+	public Integer delete(Integer id);
+
 }

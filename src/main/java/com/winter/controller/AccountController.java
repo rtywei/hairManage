@@ -1,6 +1,10 @@
 package com.winter.controller;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -130,4 +134,15 @@ public class AccountController {
 	    return df.format(result);
     }
     
+    @ResponseBody
+    @RequestMapping(value="/delete")
+    public String delete(Integer id,HttpServletRequest request , HttpServletResponse response) throws IOException {
+    	int i =  accountService.delete(id);
+    	if(i == 1) {
+			response.sendRedirect("/consume");
+    	}else {
+    		response.sendRedirect("/index");
+    	}
+    	return null;
+    }
 }

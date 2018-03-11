@@ -25,7 +25,14 @@
 		text : '查询',
 		iconCls : 'icon-search',
 		handler : search
-	} ]
+	} 
+	,{
+		id : 'button-cancel',
+		text : '删除',
+		iconCls : 'icon-cancel',
+		handler : cancel
+	} 
+	]
 
 	var accounts = [ [ {
 		field : 'id',
@@ -236,6 +243,12 @@
 		}
 		$("#user_update").window("open");
 		$("#updateForm").form("load", row);
+	}
+	function cancel() {
+		var row = $("#tt").datagrid('getSelected');
+		if(confirm("确定删除该数据?")){
+			window.location.href = "/user/delete?id="+row.id;
+		}
 	}
 	function search() {
 		var row = $("#tt").datagrid('getSelected');

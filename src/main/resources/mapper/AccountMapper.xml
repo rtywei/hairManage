@@ -87,6 +87,10 @@
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+	
+	<delete id="delete" parameterType="Integer">
+		delete from account where id = #{id, jdbcType = INTEGER}
+	</delete>
 
 	<insert id="addAccount" parameterType="com.winter.model.Account">
 		insert into account (id, money, date, description, flag, userId)

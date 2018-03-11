@@ -102,4 +102,9 @@ public class AccountServiceImpl implements AccountService{
 		return result;
 	}
 
+	@Override
+	public Integer delete(Integer id) {
+		return accountMapper.delete(id);
+	}
+
 }
